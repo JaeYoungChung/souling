@@ -1,0 +1,219 @@
+/* Legal Pages Styles */
+.legal-page {
+  min-height: 100vh;
+  background: #0A0A28;
+  color: #ffffff;
+}
+
+.legal-header {
+  background: rgba(10, 10, 40, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(178, 255, 255, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.legal-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-link {
+  color: #B2FFFF;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(178, 255, 255, 0.3);
+}
+
+.back-link:hover {
+  background: rgba(178, 255, 255, 0.1);
+  border-color: #B2FFFF;
+}
+
+.legal-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #B2FFFF;
+  text-shadow: 0 0 15px rgba(178, 255, 255, 0.4);
+}
+
+.legal-content {
+  padding: 3rem 0;
+  min-height: calc(100vh - 200px);
+}
+
+.legal-document {
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(178, 255, 255, 0.03);
+  border: 1px solid rgba(178, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 2.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.legal-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #B2FFFF;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(178, 255, 255, 0.3);
+}
+
+.legal-text {
+  line-height: 1.8;
+  color: #E6E6F8;
+  font-weight: 400;
+}
+
+.legal-text > p:first-child {
+  text-align: center;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  color: #E6E6F8;
+}
+
+.legal-text > p:nth-child(2) {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #E6E6F8;
+  font-weight: 400;
+}
+
+.legal-section {
+  margin-bottom: 2.5rem;
+}
+
+.legal-section h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #B2FFFF;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid rgba(178, 255, 255, 0.2);
+  padding-bottom: 0.5rem;
+}
+
+.legal-section p {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  white-space: pre-line;
+  color: #E6E6F8;
+  font-weight: 400;
+}
+
+.legal-section a {
+  color: #B2FFFF;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.legal-section a:hover {
+  text-shadow: 0 0 10px rgba(178, 255, 255, 0.5);
+  text-decoration: underline;
+}
+
+/* Enhanced formatting for detailed content */
+.legal-section p strong {
+  color: #80E6F2;
+  font-weight: 700;
+}
+
+.legal-section p em {
+  color: #66D9E8;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Handle list-like content better */
+.legal-section p:contains("Purpose") {
+  font-family: 'Courier New', monospace;
+  background: rgba(178, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 3px solid rgba(178, 255, 255, 0.3);
+}
+
+/* Improve readability for sections with bullet points */
+.legal-section p[style*="list"] {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(178, 255, 255, 0.2);
+  margin-left: 0.5rem;
+}
+
+/* Make key information stand out */
+.legal-section:last-child {
+  background: rgba(178, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(178, 255, 255, 0.2);
+}
+
+.legal-section:last-child h2 {
+  color: #80E6F2;
+  margin-bottom: 1rem;
+}
+
+.legal-section:last-child p {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.legal-footer {
+  background: #0A0A28;
+  border-top: 1px solid rgba(178, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  text-align: center;
+  color: #E6E6F8;
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .legal-nav {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .legal-document {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+  
+  .legal-title {
+    font-size: 1.8rem;
+  }
+  
+  .legal-content {
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .legal-document {
+    padding: 1rem;
+    margin: 0 0.5rem;
+  }
+  
+  .legal-title {
+    font-size: 1.5rem;
+  }
+  
+  .legal-section h2 {
+    font-size: 1.2rem;
+  }
+  
+  .legal-section p {
+    font-size: 1rem;
+  }
+} 
