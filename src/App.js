@@ -17,6 +17,7 @@ import appScreenshot from './assets/screenshot_app.png';
 import soulingIcon from './assets/souling.png';
 import einsteinIcon from './assets/einstein.png';
 import wisdomPlanetIcon from './assets/wisdom_planet.png';
+import { Navigate } from 'react-router-dom';
 
 function HomePage() {
   return (
@@ -174,6 +175,13 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/eula" element={<EULA />} />
+          {/* Aliases / common typos */}
+          <Route path="/privacypolicy" element={<Navigate to="/privacy-policy" replace />} />
+          <Route path="/termsofservice" element={<Navigate to="/terms-of-service" replace />} />
+          {/* Optional: trailing-slash variants */}
+          <Route path="/privacy-policy/" element={<Navigate to="/privacy-policy" replace />} />
+          <Route path="/terms-of-service/" element={<Navigate to="/terms-of-service" replace />} />
+          <Route path="/eula/" element={<Navigate to="/eula" replace />} />
         </Routes>
       </div>
     </Router>
