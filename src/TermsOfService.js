@@ -196,7 +196,7 @@ function TermsOfService() {
               <div className="legal-section">
                 <h2>Contact Information</h2>
                 <p>If you have any questions about these Terms or need support, please contact us:</p>
-                <p>Email: <a href="mailto:support@souling.com">support@souling.com</a></p>
+                <p>Email: <a href="mailto:growyoursouling@gmail.com">growyoursouling@gmail.com</a></p>
                 <p>Company: Vivos Voco Inc.</p>
               </div>
             </div>

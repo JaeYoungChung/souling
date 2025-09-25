@@ -29,7 +29,7 @@ function HomePage() {
             <h1 className="logo">Souling</h1>
           </div>
           <nav className="nav">
-            <a href="mailto:support@souling.com" className="contact-link">Contact</a>
+            <a href="mailto:growyoursouling@gmail.com" className="contact-link">Contact</a>
           </nav>
         </div>
       </header>
@@ -117,8 +117,8 @@ function HomePage() {
           <div className="contact-content">
             <div className="contact-info">
               <p>Questions about your journey through the Soulverse?</p>
-              <a href="mailto:support@souling.com" className="email-link">
-                support@souling.com
+              <a href="mailto:growyoursouling@gmail.com" className="email-link">
+                growyoursouling@gmail.com
               </a>
             </div>
             <div className="social-links">

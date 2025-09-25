@@ -114,7 +114,7 @@ function PrivacyPolicy() {
                    • Right to non-discrimination for exercising your privacy rights</p>
 
                 <p><strong>How to Exercise Your Rights:</strong></p>
-                <p>To exercise your rights, please contact us at <a href="mailto:support@souling.com">support@souling.com</a>. We will respond within 30 days (GDPR requirement) or as required by applicable law.</p>
+                <p>To exercise your rights, please contact us at <a href="mailto:growyoursouling@gmail.com">growyoursouling@gmail.com</a>. We will respond within 30 days (GDPR requirement) or as required by applicable law.</p>
               </div>
 
               <div className="legal-section">
@@ -143,7 +143,7 @@ function PrivacyPolicy() {
               <div className="legal-section">
                 <h2>Contact Us</h2>
                 <p>If you have any questions or concerns about this Privacy Policy or our data practices, please contact us:</p>
-                <p>Email: <a href="mailto:support@souling.com">support@souling.com</a></p>
+                <p>Email: <a href="mailto:growyoursouling@gmail.com">growyoursouling@gmail.com</a></p>
               </div>
 
               <div className="legal-section">

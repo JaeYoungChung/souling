@@ -71,7 +71,7 @@ src/
 
 ## Contact
 
-For support or questions, reach out to: support@souling.com
+For support or questions, reach out to: growyoursouling@gmail.com
 
 ## License
 
