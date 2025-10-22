@@ -190,6 +190,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: none;
 }
 
 .store-icon {
@@ -434,9 +435,9 @@ animation-duration: 18s;
 }
 
 .contact-content {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   align-items: center;
   text-align: center;
 }
@@ -462,10 +463,17 @@ animation-duration: 18s;
   text-shadow: 0 0 15px rgba(178, 255, 255, 0.5);
 }
 
-.social-links {
+.social-section {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.social-label {
+  font-size: 1.1rem;
+  color: #E6E6F8;
+  font-weight: 500;
+  margin: 0;
 }
 
 .social-link {
@@ -605,7 +613,7 @@ animation-duration: 18s;
     justify-content: center;
   }
 
-  .social-links {
+  .social-section {
     justify-content: center;
   }
 }

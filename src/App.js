@@ -7,9 +7,6 @@ import EULA from './EULA';
 
 // Import assets
 import instagramIcon from './assets/icon_instagram.png';
-import facebookIcon from './assets/icon_facebook.png';
-import xIcon from './assets/icon_x.png';
-import threadsIcon from './assets/icon_threads.png';
 import appStoreIcon from './assets/icon_appstore.png';
 import playStoreIcon from './assets/icon_playstore.png';
 import soulingLogo from './assets/logo.png';
@@ -44,17 +41,14 @@ function HomePage() {
               <p className="tagline">Grow your Souling, one habit at a time</p>
               <p className="subtitle">Journey through the Soulverse with wisdom from history's greatest minds</p>
               <div className="cta-buttons">
-                <button className="cta-primary">
+                <a href="https://apps.apple.com/kr/app/souling-daily-habit-companion/id6747715469" target="_blank" rel="noopener noreferrer" className="cta-primary">
                   <img src={appStoreIcon} alt="App Store" className="store-icon" />
                   Download on App Store
-                </button>
-                <button className="cta-secondary">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.vivosvoco.souling" target="_blank" rel="noopener noreferrer" className="cta-secondary">
                   <img src={playStoreIcon} alt="Play Store" className="store-icon" />
                   Get it on Google Play
-                </button>
-              </div>
-              <div className="coming-soon-badge">
-                Coming Soon
+                </a>
               </div>
             </div>
             <div className="hero-visual">
@@ -121,18 +115,10 @@ function HomePage() {
                 growyoursouling@gmail.com
               </a>
             </div>
-            <div className="social-links">
-              <a href="https://instagram.com/soulingapp" className="social-link" aria-label="Instagram">
+            <div className="social-section">
+              <p className="social-label">Follow us:</p>
+              <a href="https://www.instagram.com/souling.app/" className="social-link" aria-label="Instagram">
                 <img src={instagramIcon} alt="Instagram" className="social-icon-img" />
-              </a>
-              <a href="https://facebook.com/soulingapp" className="social-link" aria-label="Facebook">
-                <img src={facebookIcon} alt="Facebook" className="social-icon-img" />
-              </a>
-              <a href="https://x.com/soulingapp" className="social-link" aria-label="X (Twitter)">
-                <img src={xIcon} alt="X" className="social-icon-img" />
-              </a>
-              <a href="https://threads.net/@soulingapp" className="social-link" aria-label="Threads">
-                <img src={threadsIcon} alt="Threads" className="social-icon-img" />
               </a>
             </div>
           </div>
