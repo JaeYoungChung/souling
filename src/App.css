@@ -393,6 +393,16 @@ animation-duration: 18s;
   object-fit: contain;
 }
 
+.feature-card:nth-child(1) .feature-icon {
+  margin-top: 1.0rem;
+  margin-bottom: 0.8rem;
+}
+
+.feature-card:nth-child(1) .feature-icon-img {
+  width: 100px;
+  height: 100px;
+}
+
 .feature-card:nth-child(2) .feature-icon {
   margin-top: 0rem;
   margin-bottom: 0rem;
@@ -411,7 +421,7 @@ animation-duration: 18s;
 
 .feature-card:nth-child(3) .feature-icon {
   margin-bottom: 1.0rem;
-  margin-top: 1.0rem;
+  margin-top: 1.4rem;
 }
 
 .feature-title {
