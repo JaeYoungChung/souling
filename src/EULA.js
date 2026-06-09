@@ -9,7 +9,6 @@ function EULA() {
         <div className="container">
           <div className="legal-nav">
             <Link to="/" className="back-link">← Back to Home</Link>
-            <h1 className="legal-logo">Souling</h1>
           </div>
         </div>
       </header>

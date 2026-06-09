@@ -1,15 +1,13 @@
 /* Legal Pages Styles */
 .legal-page {
   min-height: 100vh;
-  background: #0A0A28;
+  background: linear-gradient(to bottom, rgba(9, 25, 112, 1) -20%, rgba(0, 97, 255, 1) 8%, rgba(96, 239, 255, 1) 200%);
   color: #ffffff;
 }
 
 .legal-header {
-  background: rgba(10, 10, 40, 0.95);
-  backdrop-filter: blur(20px);
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(178, 255, 255, 0.2);
+  background: transparent;
+  padding: 2rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -22,18 +20,21 @@
 }
 
 .back-link {
-  color: #B2FFFF;
   text-decoration: none;
-  font-weight: 500;
+  color: #ffffff;
+  font-weight: 400;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   transition: all 0.3s ease;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid rgba(178, 255, 255, 0.3);
 }
 
 .back-link:hover {
-  background: rgba(178, 255, 255, 0.1);
-  border-color: #B2FFFF;
+  transform: translateY(-5px);
+  font-weight: 600;
+  border-color: rgba(255, 255, 255, 1);
+  background: rgba(22, 48, 192, 0.4);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .legal-logo {
@@ -51,8 +52,8 @@
 .legal-document {
   max-width: 800px;
   margin: 0 auto;
-  background: rgba(178, 255, 255, 0.03);
-  border: 1px solid rgba(178, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   padding: 2.5rem;
   backdrop-filter: blur(10px);
@@ -168,8 +169,7 @@
 }
 
 .legal-footer {
-  background: #0A0A28;
-  border-top: 1px solid rgba(178, 255, 255, 0.1);
+  background: transparent;
   padding: 1.5rem 0;
   text-align: center;
   color: #E6E6F8;

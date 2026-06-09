@@ -1,66 +1,168 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { useRive } from '@rive-app/react-canvas';
 import './App.css';
+
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import EULA from './EULA';
 
-// Import assets
-import instagramIcon from './assets/icon_instagram.png';
-import appStoreIcon from './assets/icon_appstore.png';
-import playStoreIcon from './assets/icon_playstore.png';
-import soulingLogo from './assets/logo.png';
-import appScreenshot from './assets/screenshot_app.png';
-import soulingIcon from './assets/souling.png';
-import einsteinIcon from './assets/einstein.png';
-import wisdomPlanetIcon from './assets/wisdom_planet.png';
+// Animations
+import Chats from './Chats';
+import Stars from './Stars';
+import Moons from './Moons';
+
+// Icons
+import appLogo from './assets/logo.png';
+import sparkIcon from './assets/spark.png';
+import bondIcon from './assets/bond.png';
+import checkIcon from './assets/check.png';
+import instagramIcon from './assets/instagram.png';
+import threadsIcon from './assets/threads.png';
+
+// Store badges
+import appstoreBadge from './assets/appStore.svg';
+import playstoreBadge from './assets/playStore.svg';
+
+// Screenshots
+import appScreenshot from './assets/screenshot.png';
+import routines from './assets/routines.png';
+import soultypes from './assets/soultypes.png';
+import stats from './assets/stats.png';
+
+
+const CONTACT_EMAIL = 'growyoursouling@gmail.com';
+
+const EMOTES = ['emoteWave', 'emoteHappy'];
+
+const DURATIONS = {
+  idle: 4000,
+  emoteWave: 2667,
+  emoteHappy: 1667,
+};
+
+const SM = 'StateMachine:Souling';
+
+
+function SoulingRive() {
+  const { RiveComponent, rive } = useRive({
+    src: '/souling.riv',
+    artboard: 'Souling',
+    stateMachines: SM,
+    autoplay: true,
+  });
+
+  const isRunning = useRef(false);
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    if (!rive || isRunning.current) return;
+
+    const tryStart = setInterval(() => {
+      const inputs = rive.stateMachineInputs(SM);
+      if (!inputs || inputs.length === 0) return;
+
+      clearInterval(tryStart);
+      isRunning.current = true;
+
+      const fire = (name) => {
+        const input = inputs.find((i) => i.name === name);
+        input?.fire();
+      };
+
+      const loop = () => {
+        const emote = EMOTES[Math.floor(Math.random() * EMOTES.length)];
+        fire(emote);
+        timeoutRef.current = setTimeout(loop, DURATIONS[emote] + DURATIONS.idle);
+      };
+
+      loop();
+    }, 100);
+
+    return () => {
+      clearInterval(tryStart);
+      isRunning.current = false;
+      clearTimeout(timeoutRef.current);
+    };
+  }, [rive]);
+
+  return (
+    <div className="rive-container">
+      <RiveComponent />
+    </div>
+  );
+}
+
 
 function HomePage() {
+  const [showHeader, setShowHeader] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowHeader(window.scrollY < window.innerHeight * 0.05);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
-      {/* Header Section */}
-      <header className="header">
+      {/* Header */}
+      <header
+        className="header"
+        style={{ transform: showHeader ? 'translateY(0)' : 'translateY(-100%)' }}
+      >
         <div className="container">
           <div className="logo-section">
-            <img src={soulingLogo} alt="Souling" className="logo-image" />
+            <img src={appLogo} alt="Souling" className="logo-image" />
             <h1 className="logo">Souling</h1>
           </div>
           <nav className="nav">
-            <a href="mailto:growyoursouling@gmail.com" className="contact-link">Contact</a>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="contact-link">Contact</a>
           </nav>
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="hero">
-        <div className="stars"></div>
         <div className="container">
           <div className="hero-content">
             <div className="hero-text">
-              <h1 className="hero-logo">Souling</h1>
-              <p className="tagline">Grow your Souling, one habit at a time</p>
-              <p className="subtitle">Journey through the Soulverse with wisdom from history's greatest minds</p>
+              <h1 className="hero-title">Souling</h1>
+              <p className="tagline">Meet Your New Habit Trainer</p>
+              <p className="subtitle">Ordinary Days, Extraordinary Lives</p>
               <div className="cta-buttons">
-                <a href="https://apps.apple.com/kr/app/souling-daily-habit-companion/id6747715469" target="_blank" rel="noopener noreferrer" className="cta-primary">
-                  <img src={appStoreIcon} alt="App Store" className="store-icon" />
-                  Download on App Store
+                <a
+                  href="https://apps.apple.com/kr/app/souling-daily-habit-companion/id6747715469"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="store-badge-link"
+                >
+                  <img src={appstoreBadge} alt="Download on the App Store" className="store-badge" />
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=com.vivosvoco.souling" target="_blank" rel="noopener noreferrer" className="cta-secondary">
-                  <img src={playStoreIcon} alt="Play Store" className="store-icon" />
-                  Get it on Google Play
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.vivosvoco.souling"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="store-badge-link"
+                >
+                  <img src={playstoreBadge} alt="Get it on Google Play" className="store-badge" />
                 </a>
               </div>
             </div>
             <div className="hero-visual">
               <div className="cosmic-container">
-                <div className="floating-planets">
-                  <div className="planet planet-1"></div>
-                  <div className="planet planet-2"></div>
-                  <div className="planet planet-3"></div>
-                </div>
-                {/* App Screenshot */}
-                <div className="app-image-placeholder">
-                  <img src={appScreenshot} alt="Souling App Screenshot" className="app-screenshot" />
+                <div className="app-image-wrapper">
+                  <Chats />
+                  <img src={sparkIcon} alt="" className="floating-icon icon-spark" />
+                  <img src={bondIcon} alt="" className="floating-icon icon-bond" />
+                  <img src={checkIcon} alt="" className="floating-icon icon-check" />
+                  <div className="app-image-placeholder">
+                    <img src={appScreenshot} alt="Souling App Screenshot" className="app-screenshot" />
+                    <div className="rive-overlay">
+                      <SoulingRive />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -68,58 +170,37 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features */}
       <section className="features">
         <div className="container">
-          <h2 className="section-title">Explore the Soulverse</h2>
+          <h2 className="section-title">Join the Soulverse</h2>
           <div className="features-grid">
-            <div className="feature-card">
+            <div className="feature-card feature-card--routines">
               <div className="feature-icon">
-                <img src={soulingIcon} alt="Souling" className="feature-icon-img" />
+                <img src={routines} alt="Routines" className="feature-icon-img" />
               </div>
-              <h3 className="feature-title">Tend to Your Souling</h3>
+              <h3 className="feature-title">200+ Routines</h3>
               <p className="feature-description">
-              Your inner self isn’t fixed—it’s growing. Care for it like a tiny spirit. Your journey shapes your Souling—and your Souling shapes your world.
+                Souling offers a vast library of daily routines. Collect and grow them into lifelong habits!
               </p>
             </div>
-            <div className="feature-card">
+            <div className="feature-card feature-card--soultypes">
               <div className="feature-icon">
-                <img src={einsteinIcon} alt="Einstein" className="feature-icon-img" />
+                <img src={soultypes} alt="Soul Types" className="feature-icon-img" />
               </div>
-              <h3 className="feature-title">Meet Your Mentors</h3>
+              <h3 className="feature-title">40+ Soul Types</h3>
               <p className="feature-description">
-              Einstein sat with big questions. Lincoln stood firm through stormy times. Across space and time, great minds become your mentors, bringing bold insights and timeless courage as you grow.
+                Souling evolves reflecting your habits. Unlock 300+ customization options along the way!
               </p>
             </div>
-            <div className="feature-card">
+            <div className="feature-card feature-card--stats">
               <div className="feature-icon">
-                <img src={wisdomPlanetIcon} alt="Wisdom Planet" className="feature-icon-img" />
+                <img src={stats} alt="Stats and Ranks" className="feature-icon-img" />
               </div>
-              <h3 className="feature-title">Explore Virtue Planets</h3>
+              <h3 className="feature-title">24 Virtues</h3>
               <p className="feature-description">
-              Wander the Planet of Wonder. Rest on the rings of Balance. Face the winds of Courage. Every realm holds new routines, dreamlike lessons, and hidden reflections.
+                Souling tracks all your activities. Choose your skills, level up, and climb the global leaderboard!
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="contact">
-        <div className="container">
-          <h2 className="section-title">Connect with Us</h2>
-          <div className="contact-content">
-            <div className="contact-info">
-              <p>Questions about your journey through the Soulverse?</p>
-              <a href="mailto:growyoursouling@gmail.com" className="email-link">
-                growyoursouling@gmail.com
-              </a>
-            </div>
-            <div className="social-section">
-              <p className="social-label">Follow us:</p>
-              <a href="https://www.instagram.com/souling.app/" className="social-link" aria-label="Instagram">
-                <img src={instagramIcon} alt="Instagram" className="social-icon-img" />
-              </a>
             </div>
           </div>
         </div>
@@ -130,17 +211,22 @@ function HomePage() {
         <div className="container">
           <div className="footer-content">
             <div className="footer-brand">
-              <h3>Souling</h3>
-              <p>Grow your Souling, one habit at a time</p>
+              <h3>Connect with Us</h3>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="footer-email">{CONTACT_EMAIL}</a>
             </div>
-            <div className="footer-links">
-              <h4>Legal</h4>
-              <ul>
-                <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-                <li><Link to="/terms-of-service">Terms of Service</Link></li>
-                <li><Link to="/eula">EULA</Link></li>
-              </ul>
+            <div className="footer-social">
+              <a href="https://www.instagram.com/souling.app/" className="footer-social-link" aria-label="Instagram">
+                <img src={instagramIcon} alt="Instagram" className="footer-social-icon" />
+              </a>
+              <a href="https://www.threads.net/@souling.app" className="footer-social-link" aria-label="Threads">
+                <img src={threadsIcon} alt="Threads" className="footer-social-icon" />
+              </a>
             </div>
+          </div>
+          <div className="footer-links">
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/terms-of-service">Terms of Service</Link>
+            <Link to="/eula">EULA</Link>
           </div>
           <div className="footer-bottom">
             <p>© 2025 Souling. All rights reserved.</p>
@@ -151,9 +237,12 @@ function HomePage() {
   );
 }
 
+
 function App() {
   return (
     <Router>
+      <Moons />
+      <Stars />
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
