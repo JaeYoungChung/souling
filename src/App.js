@@ -229,7 +229,7 @@ function HomePage() {
             <Link to="/eula">EULA</Link>
           </div>
           <div className="footer-bottom">
-            <p>© 2025 Souling. All rights reserved.</p>
+            <p>© 2026 Souling. All rights reserved.</p>
           </div>
         </div>
       </footer>
