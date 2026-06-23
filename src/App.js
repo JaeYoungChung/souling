@@ -129,8 +129,8 @@ function HomePage() {
           <div className="hero-content">
             <div className="hero-text">
               <h1 className="hero-title">Souling</h1>
-              <p className="tagline">Meet Your New Habit Trainer</p>
-              <p className="subtitle">Ordinary Days, Extraordinary Lives</p>
+              <p className="tagline">Life-changing Habits</p>
+              <p className="subtitle">Make ordinary days extraordinary.</p>
               <div className="cta-buttons">
                 <a
                   href="https://apps.apple.com/kr/app/souling-daily-habit-companion/id6747715469"

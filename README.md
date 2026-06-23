@@ -4,7 +4,7 @@ A modern React.js landing page for the Souling app.
 
 ## About Souling
 
-**Tagline:** "Grow your Souling, one habit at a time."
+**Tagline:** "Life-changing Habits"
 
 Souling is a personal growth app that helps users develop healthy habits through:
 - 🌱 **Tend to Your Souling** - Personalized habit tracking and mindful practices
