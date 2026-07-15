@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
-const messages = [
-  "Habits are muscles too!",
-  "Every small step counts!",
-  "You've got this!",
-  "Let's grow together!",
-  "One habit at a time!",
-];
+const MESSAGES = {
+  en: [
+    "Ready for the next grow-up?",
+    "One routine at a time. That’s how we grow.",
+    "Little progress still counts.",
+    "Let’s make today a little brighter.",
+    "One habit at a time!",
+  ],
+  ko: [
+    "성장 할 준비 됐어?",
+    "난 언제든 여기 있어.",
+    "작은 행동 하나부터!",
+    "괜찮아, 다시 시작하면 돼.",
+    "하나씩 시작해볼까?",
+  ],
+};
 
-export default function Chats() {
+export default function Chats({ lang = 'en' }) {
+  const messages = MESSAGES[lang] || MESSAGES.en;
   const [messageIndex, setMessageIndex] = useState(0);
   const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    setMessageIndex(0);
+  }, [lang]);
 
   useEffect(() => {
     const cycle = setInterval(() => {
@@ -21,7 +35,7 @@ export default function Chats() {
       }, 200);
     }, 4000);
     return () => clearInterval(cycle);
-  }, []);
+  }, [messages.length]);
 
   return (
     <div
@@ -34,7 +48,8 @@ export default function Chats() {
     >
       <p style={{
         margin: 0,
-        fontWeight: 600,
+        fontWeight: lang === 'ko' ? 400 : 600,
+        lineHeight: lang === 'ko' ? 'normal' : 1.3,
         color: '#333',
         minHeight: '20px',
         textAlign: 'center',

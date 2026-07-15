@@ -11,11 +11,28 @@ html {
 
 body {
   background: transparent;
-  font-family: 'Baloo 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Baloo 2', 'Jua', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Jua ships a single weight (400); reduce weight in Korean to avoid faux-bold */
+html[lang="ko"] h1,
+html[lang="ko"] h2,
+html[lang="ko"] h3,
+html[lang="ko"] p,
+html[lang="ko"] a,
+html[lang="ko"] button {
+  font-weight: 400;
+}
+
+/* Numbers always use Baloo 2, keeping its weight even inside Korean text */
+.num,
+html[lang="ko"] .num {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 600;
 }
 
 .App {
@@ -69,7 +86,14 @@ body {
   color: white;
 }
 
-.nav .contact-link {
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav .contact-link,
+.nav .lang-toggle {
   text-decoration: none;
   color: #ffffff;
   font-weight: 400;
@@ -79,7 +103,16 @@ body {
   transition: all 0.3s ease;
 }
 
-.nav .contact-link:hover {
+.nav .lang-toggle {
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0.4rem 1.25rem;
+}
+
+.nav .contact-link:hover,
+.nav .lang-toggle:hover {
   transform: translateY(-5px);
   font-weight: 600;
   border-color: rgba(255, 255, 255, 1);
@@ -120,14 +153,13 @@ body {
 .hero-title {
   font-size: clamp(3rem, 5vw, 5rem);
   font-weight: 600;
-  margin-bottom: 2rem;
   color: white;
 }
 
 .tagline {
   font-size: clamp(1.4rem, 2.8vw, 2.8rem);
   font-weight: 600;
-  margin-bottom: 0.4rem;
+  margin-bottom: 1rem;
   color: #ffffff;
 }
 
@@ -350,7 +382,7 @@ body {
 }
 
 .feature-title {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: #ffffff;

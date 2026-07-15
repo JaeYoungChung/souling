@@ -24,14 +24,95 @@ import threadsIcon from './assets/threads.png';
 import appstoreBadge from './assets/appStore.svg';
 import playstoreBadge from './assets/playStore.svg';
 
-// Screenshots
-import appScreenshot from './assets/screenshot.png';
-import routines from './assets/routines.png';
-import soultypes from './assets/soultypes.png';
-import stats from './assets/stats.png';
+// Screenshots (English)
+import appScreenshotEng from './assets/screenshot_eng.png';
+import routinesEng from './assets/routines_eng.png';
+import soultypesEng from './assets/soultypes_eng.png';
+import statsEng from './assets/stats_eng.png';
+
+// Screenshots (Korean)
+import appScreenshotKr from './assets/screenshot_kr.png';
+import routinesKr from './assets/routines_kr.png';
+import soultypesKr from './assets/soultypes_kr.png';
+import statsKr from './assets/stats_kr.png';
 
 
 const CONTACT_EMAIL = 'growyoursouling@gmail.com';
+
+// ─── Localization ───────────────────────────────────────────
+const IMAGES = {
+  en: { appScreenshot: appScreenshotEng, routines: routinesEng, soultypes: soultypesEng, stats: statsEng },
+  ko: { appScreenshot: appScreenshotKr, routines: routinesKr, soultypes: soultypesKr, stats: statsKr },
+};
+
+const TRANSLATIONS = {
+  en: {
+    htmlLang: 'en',
+    pageTitle: 'Souling — Life-changing Habits',
+    contact: 'Contact',
+    heroTitle: 'Souling',
+    heroTagline: 'Life-changing Habits',
+    heroSubtitle: 'Make ordinary days extraordinary.',
+    appStoreAlt: 'Download on the App Store',
+    playStoreAlt: 'Get it on Google Play',
+    appScreenshotAlt: 'Souling App Screenshot',
+    sectionTitle: 'Meet your Souling!',
+    routinesTitle: '200+ Routines',
+    routinesDesc: 'Souling offers a vast library of daily routines. Collect and grow them into lifelong habits!',
+    soultypesTitle: '40+ Soul Types',
+    soultypesDesc: 'Souling evolves reflecting your habits. Unlock 300+ customization options along the way!',
+    statsTitle: '24 Strengths',
+    statsDesc: 'Souling keeps track of your progress. Choose your skills, level up, and climb the global leaderboard!',
+    footerConnect: 'Connect with Us',
+    privacyPolicy: 'Privacy Policy',
+    termsOfService: 'Terms of Service',
+    eula: 'EULA',
+    footerRights: '© 2026 Souling. All rights reserved.',
+    langToggle: '한국어',
+  },
+  ko: {
+    htmlLang: 'ko',
+    pageTitle: '소울링 — 삶을 변화시키는 습관',
+    contact: '문의하기',
+    heroTitle: '소울링',
+    heroTagline: '삶을 변화시키는 습관',
+    heroSubtitle: '건강한 습관을 하나씩 길러보세요!',
+    appStoreAlt: 'App Store에서 다운로드',
+    playStoreAlt: 'Google Play에서 다운로드',
+    appScreenshotAlt: 'Souling 앱 스크린샷',
+    sectionTitle: '당신의 소울링을 만나봐요!',
+    routinesTitle: '200개 이상의 루틴',
+    routinesDesc: '소울링은 방대한 데일리 루틴을 제공합니다. 루틴을 모아 평생 습관으로 키워보세요!',
+    soultypesTitle: '40종 이상의 소울 타입',
+    soultypesDesc: '소울링은 당신의 습관에 따라 진화해요. 300가지 이상의 커스터마이징 옵션을 잠금 해제하세요!',
+    statsTitle: '24가지 능력치',
+    statsDesc: '소울링은 진행 상태를 기록해요. 능력치를 선택하고 레벨업하며 글로벌 리더보드에 도전하세요!',
+    footerConnect: '환영해요!',
+    privacyPolicy: '개인정보 처리방침',
+    termsOfService: '이용약관',
+    eula: 'EULA',
+    footerRights: '© 2026 Souling. All rights reserved.',
+    langToggle: 'English',
+  },
+};
+
+// Wrap digit runs so numbers always render in Baloo 2 (even in Korean/Jua text)
+function nums(text) {
+  return String(text)
+    .split(/(\d+)/)
+    .map((part, i) => (/^\d+$/.test(part) ? <span key={i} className="num">{part}</span> : part));
+}
+
+function detectLang() {
+  try {
+    const saved = localStorage.getItem('souling_lang');
+    if (saved === 'en' || saved === 'ko') return saved;
+  } catch (e) {
+    // localStorage unavailable (e.g. private mode) — fall back to browser language
+  }
+  const browserLang = navigator.language || (navigator.languages && navigator.languages[0]) || 'en';
+  return browserLang.toLowerCase().startsWith('ko') ? 'ko' : 'en';
+}
 
 const EMOTES = ['emoteWave', 'emoteHappy'];
 
@@ -96,6 +177,10 @@ function SoulingRive() {
 
 function HomePage() {
   const [showHeader, setShowHeader] = useState(true);
+  const [lang, setLang] = useState(detectLang);
+
+  const t = TRANSLATIONS[lang];
+  const img = IMAGES[lang];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -104,6 +189,18 @@ function HomePage() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = t.htmlLang;
+    document.title = t.pageTitle;
+    try {
+      localStorage.setItem('souling_lang', lang);
+    } catch (e) {
+      // ignore persistence failures
+    }
+  }, [lang, t.htmlLang, t.pageTitle]);
+
+  const toggleLang = () => setLang((prev) => (prev === 'ko' ? 'en' : 'ko'));
 
   return (
     <>
@@ -115,10 +212,13 @@ function HomePage() {
         <div className="container">
           <div className="logo-section">
             <img src={appLogo} alt="Souling" className="logo-image" />
-            <h1 className="logo">Souling</h1>
+            <h1 className="logo">{t.heroTitle}</h1>
           </div>
           <nav className="nav">
-            <a href={`mailto:${CONTACT_EMAIL}`} className="contact-link">Contact</a>
+            <button type="button" className="lang-toggle" onClick={toggleLang}>
+              {t.langToggle}
+            </button>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="contact-link">{t.contact}</a>
           </nav>
         </div>
       </header>
@@ -128,9 +228,9 @@ function HomePage() {
         <div className="container">
           <div className="hero-content">
             <div className="hero-text">
-              <h1 className="hero-title">Souling</h1>
-              <p className="tagline">Life-changing Habits</p>
-              <p className="subtitle">Make ordinary days extraordinary.</p>
+              <h1 className="hero-title">{t.heroTitle}</h1>
+              <p className="tagline">{t.heroTagline}</p>
+              <p className="subtitle">{t.heroSubtitle}</p>
               <div className="cta-buttons">
                 <a
                   href="https://apps.apple.com/kr/app/souling-daily-habit-companion/id6747715469"
@@ -138,7 +238,7 @@ function HomePage() {
                   rel="noopener noreferrer"
                   className="store-badge-link"
                 >
-                  <img src={appstoreBadge} alt="Download on the App Store" className="store-badge" />
+                  <img src={appstoreBadge} alt={t.appStoreAlt} className="store-badge" />
                 </a>
                 <a
                   href="https://play.google.com/store/apps/details?id=com.vivosvoco.souling"
@@ -146,19 +246,19 @@ function HomePage() {
                   rel="noopener noreferrer"
                   className="store-badge-link"
                 >
-                  <img src={playstoreBadge} alt="Get it on Google Play" className="store-badge" />
+                  <img src={playstoreBadge} alt={t.playStoreAlt} className="store-badge" />
                 </a>
               </div>
             </div>
             <div className="hero-visual">
               <div className="cosmic-container">
                 <div className="app-image-wrapper">
-                  <Chats />
+                  <Chats lang={lang} />
                   <img src={sparkIcon} alt="" className="floating-icon icon-spark" />
                   <img src={bondIcon} alt="" className="floating-icon icon-bond" />
                   <img src={checkIcon} alt="" className="floating-icon icon-check" />
                   <div className="app-image-placeholder">
-                    <img src={appScreenshot} alt="Souling App Screenshot" className="app-screenshot" />
+                    <img src={img.appScreenshot} alt={t.appScreenshotAlt} className="app-screenshot" />
                     <div className="rive-overlay">
                       <SoulingRive />
                     </div>
@@ -173,34 +273,28 @@ function HomePage() {
       {/* Features */}
       <section className="features">
         <div className="container">
-          <h2 className="section-title">Join the Soulverse</h2>
+          <h2 className="section-title">{t.sectionTitle}</h2>
           <div className="features-grid">
             <div className="feature-card feature-card--routines">
               <div className="feature-icon">
-                <img src={routines} alt="Routines" className="feature-icon-img" />
+                <img src={img.routines} alt={t.routinesTitle} className="feature-icon-img" />
               </div>
-              <h3 className="feature-title">200+ Routines</h3>
-              <p className="feature-description">
-                Souling offers a vast library of daily routines. Collect and grow them into lifelong habits!
-              </p>
+              <h3 className="feature-title">{nums(t.routinesTitle)}</h3>
+              <p className="feature-description">{nums(t.routinesDesc)}</p>
             </div>
             <div className="feature-card feature-card--soultypes">
               <div className="feature-icon">
-                <img src={soultypes} alt="Soul Types" className="feature-icon-img" />
+                <img src={img.soultypes} alt={t.soultypesTitle} className="feature-icon-img" />
               </div>
-              <h3 className="feature-title">40+ Soul Types</h3>
-              <p className="feature-description">
-                Souling evolves reflecting your habits. Unlock 300+ customization options along the way!
-              </p>
+              <h3 className="feature-title">{nums(t.soultypesTitle)}</h3>
+              <p className="feature-description">{nums(t.soultypesDesc)}</p>
             </div>
             <div className="feature-card feature-card--stats">
               <div className="feature-icon">
-                <img src={stats} alt="Stats and Ranks" className="feature-icon-img" />
+                <img src={img.stats} alt={t.statsTitle} className="feature-icon-img" />
               </div>
-              <h3 className="feature-title">24 Virtues</h3>
-              <p className="feature-description">
-                Souling tracks all your activities. Choose your skills, level up, and climb the global leaderboard!
-              </p>
+              <h3 className="feature-title">{nums(t.statsTitle)}</h3>
+              <p className="feature-description">{nums(t.statsDesc)}</p>
             </div>
           </div>
         </div>
@@ -211,7 +305,7 @@ function HomePage() {
         <div className="container">
           <div className="footer-content">
             <div className="footer-brand">
-              <h3>Connect with Us</h3>
+              <h3>{t.footerConnect}</h3>
               <a href={`mailto:${CONTACT_EMAIL}`} className="footer-email">{CONTACT_EMAIL}</a>
             </div>
             <div className="footer-social">
@@ -224,12 +318,12 @@ function HomePage() {
             </div>
           </div>
           <div className="footer-links">
-            <Link to="/privacy-policy">Privacy Policy</Link>
-            <Link to="/terms-of-service">Terms of Service</Link>
-            <Link to="/eula">EULA</Link>
+            <Link to="/privacy-policy">{t.privacyPolicy}</Link>
+            <Link to="/terms-of-service">{t.termsOfService}</Link>
+            <Link to="/eula">{t.eula}</Link>
           </div>
           <div className="footer-bottom">
-            <p>© 2026 Souling. All rights reserved.</p>
+            <p>{nums(t.footerRights)}</p>
           </div>
         </div>
       </footer>
