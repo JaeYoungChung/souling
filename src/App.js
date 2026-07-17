@@ -39,6 +39,27 @@ import statsKr from './assets/stats_kr.png';
 
 const CONTACT_EMAIL = 'growyoursouling@gmail.com';
 
+// Current date in Korea (KST) as YYYY-MM-DD, matching the server's daily key.
+const kstDateStr = () =>
+  new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
+
+// Records a store-badge click. Counts at most one click per badge per device
+// per KST day (daily-unique), then fires a fire-and-forget request to the
+// Netlify function that increments the shared counter.
+const trackBadgeClick = (badge) => {
+  try {
+    const key = `souling_badge_${badge}_${kstDateStr()}`;
+    if (localStorage.getItem(key)) return;
+    localStorage.setItem(key, '1');
+    fetch(`/.netlify/functions/track?b=${badge}`, {
+      method: 'POST',
+      keepalive: true,
+    }).catch(() => {});
+  } catch (e) {
+    // localStorage unavailable (e.g. private mode) — skip tracking silently.
+  }
+};
+
 // ─── Localization ───────────────────────────────────────────
 const IMAGES = {
   en: { appScreenshot: appScreenshotEng, routines: routinesEng, soultypes: soultypesEng, stats: statsEng },
@@ -237,6 +258,7 @@ function HomePage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="store-badge-link"
+                  onClick={() => trackBadgeClick('a')}
                 >
                   <img src={appstoreBadge} alt={t.appStoreAlt} className="store-badge" />
                 </a>
@@ -245,6 +267,7 @@ function HomePage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="store-badge-link"
+                  onClick={() => trackBadgeClick('p')}
                 >
                   <img src={playstoreBadge} alt={t.playStoreAlt} className="store-badge" />
                 </a>

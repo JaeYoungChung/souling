@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LegalPages.css';
  
 function EULA() {
+  const [clicks, setClicks] = useState(null);
+
+  useEffect(() => {
+    fetch('/.netlify/functions/count')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => d && setClicks(d))
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="legal-page">
       <header className="legal-header">
@@ -136,6 +145,20 @@ function EULA() {
       <footer className="legal-footer">
         <div className="container">
           <p>© 2026 Souling. All rights reserved.</p>
+          {clicks && (
+            <p
+              style={{
+                fontSize: '9px',
+                lineHeight: 1,
+                color: '#d0d0d0',
+                opacity: 0.4,
+                marginTop: '6px',
+                userSelect: 'none',
+              }}
+            >
+              a:{clicks.a}p:{clicks.p}
+            </p>
+          )}
         </div>
       </footer>
     </div>
