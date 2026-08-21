@@ -69,8 +69,8 @@ export const UI_TEXT = {
     continueTest: 'Continue',
     restart: 'Start over',
 
-    scaleNo: 'No',
-    scaleYes: 'Yes',
+    scaleNo: 'Disagree',
+    scaleYes: 'Agree',
     prev: 'Back',
     questionPlaceholder: 'Question coming soon',
 
