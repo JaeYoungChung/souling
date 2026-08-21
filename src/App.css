@@ -550,6 +550,46 @@ html[lang="ko"] .num {
     padding: 0 15px;
   }
 
+  /* 헤더 — 모바일에서 찌부되지 않게 컴팩트하게 */
+  .header {
+    padding: 1rem 0;
+  }
+
+  .logo-section {
+    gap: 0.5rem;
+  }
+
+  .logo-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .nav {
+    gap: 0.4rem;
+  }
+
+  .nav .contact-link,
+  .nav .lang-toggle {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+}
+
+/* 아주 좁은 화면에서는 문의하기 링크는 숨긴다 (푸터에도 있음) */
+@media (max-width: 430px) {
+  .nav .contact-link:not(.nav-tests-link) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+
   .hero {
     padding: 6rem 0 2rem;
     min-height: unset;

@@ -338,7 +338,7 @@
 }
 
 .ht-quiz-qnum {
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #8fe8ff;
   margin-bottom: 12px;
@@ -346,10 +346,11 @@
 }
 
 .ht-quiz-question {
-  font-size: clamp(1.28rem, 6vw, 1.65rem);
+  font-family: 'Baloo 2', 'Jua', sans-serif;
+  font-size: clamp(1.4rem, 6.6vw, 1.8rem);
   font-weight: 600;
   line-height: 1.5;
-  max-width: 440px;
+  max-width: 460px;
   word-break: keep-all;
 }
 
@@ -470,7 +471,7 @@
   }
 
   .ht-quiz-question {
-    font-size: 1.22rem;
+    font-size: 1.34rem;
   }
 
   .ht-quiz-scale {
