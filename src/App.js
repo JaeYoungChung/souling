@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useRive } from '@rive-app/react-canvas';
 import './App.css';
@@ -6,6 +6,7 @@ import './App.css';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import EULA from './EULA';
+import TestsPage from './TestsPage';
 
 // Animations
 import Chats from './Chats';
@@ -35,6 +36,9 @@ import appScreenshotKr from './assets/screenshot_kr.png';
 import routinesKr from './assets/routines_kr.png';
 import soultypesKr from './assets/soultypes_kr.png';
 import statsKr from './assets/stats_kr.png';
+
+// 영웅 유형 테스트 — 홈 번들과 분리 로딩
+const HeroTestApp = lazy(() => import('./heroTest/HeroTestApp'));
 
 
 const CONTACT_EMAIL = 'growyoursouling@gmail.com';
@@ -84,6 +88,10 @@ const TRANSLATIONS = {
     soultypesDesc: 'Souling evolves reflecting your habits. Unlock 300+ customization options along the way!',
     statsTitle: '24 Strengths',
     statsDesc: 'Souling keeps track of your progress. Choose your skills, level up, and climb the global leaderboard!',
+    navTests: 'Tests',
+    heroTestTitle: 'Which hero lives inside you?',
+    heroTestDesc: '27 questions · about 5 min · 16 hero types',
+    heroTestCta: 'Take the test',
     footerConnect: 'Connect with Us',
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
@@ -108,6 +116,10 @@ const TRANSLATIONS = {
     soultypesDesc: '소울링은 당신의 습관에 따라 진화해요. 300가지 이상의 커스터마이징 옵션을 잠금 해제하세요!',
     statsTitle: '24가지 능력치',
     statsDesc: '소울링은 진행 상태를 기록해요. 능력치를 선택하고 레벨업하며 글로벌 리더보드에 도전하세요!',
+    navTests: '유형 검사',
+    heroTestTitle: '내 안의 영웅은 누구일까요?',
+    heroTestDesc: '27문항 · 약 5분 · 16가지 영웅 유형',
+    heroTestCta: '테스트 하러 가기',
     footerConnect: '환영해요!',
     privacyPolicy: '개인정보 처리방침',
     termsOfService: '이용약관',
@@ -236,6 +248,7 @@ function HomePage() {
             <h1 className="logo">{t.heroTitle}</h1>
           </div>
           <nav className="nav">
+            <Link to="/tests" className="contact-link nav-tests-link">{t.navTests}</Link>
             <button type="button" className="lang-toggle" onClick={toggleLang}>
               {t.langToggle}
             </button>
@@ -323,6 +336,19 @@ function HomePage() {
         </div>
       </section>
 
+      {/* Hero Type Test banner */}
+      <section className="hero-test-banner">
+        <div className="container">
+          <Link to="/hero-test" className="hero-test-banner-card">
+            <div className="hero-test-banner-text">
+              <h2>{t.heroTestTitle}</h2>
+              <p>{nums(t.heroTestDesc)}</p>
+            </div>
+            <span className="hero-test-banner-cta">{t.heroTestCta} →</span>
+          </Link>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="footer">
         <div className="container">
@@ -368,6 +394,15 @@ function App() {
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/termsofservice" element={<TermsOfService />} />
           <Route path="/eula" element={<EULA />} />
+          <Route path="/tests" element={<TestsPage />} />
+          <Route
+            path="/hero-test/*"
+            element={
+              <Suspense fallback={null}>
+                <HeroTestApp />
+              </Suspense>
+            }
+          />
         </Routes>
       </div>
     </Router>

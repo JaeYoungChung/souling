@@ -1,7 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LegalPages.css';
- 
+
+// 영웅 유형 테스트의 익명 유형 분포 (예: "orp16, mus7").
+// 나중에 채점 보정값(calibration.js)을 정할 때 참고용으로만 쓴다.
+function HeroTypeCounts() {
+  const [text, setText] = useState('');
+
+  useEffect(() => {
+    fetch('/.netlify/functions/hero-count')
+      .then((res) => res.json())
+      .then((counts) => {
+        const summary = Object.entries(counts)
+          .filter(([, n]) => n > 0)
+          .sort((a, b) => b[1] - a[1])
+          .map(([code, n]) => `${code}${n}`)
+          .join(', ');
+        setText(summary);
+      })
+      .catch(() => {});
+  }, []);
+
+  if (!text) return null;
+  return (
+    <p style={{ fontSize: '7px', color: '#c4c9d4', lineHeight: 1.4, marginTop: '8px' }}>
+      {text}
+    </p>
+  );
+}
+
 function TermsOfService() {
   return (
     <div className="legal-page">
@@ -213,6 +240,7 @@ function TermsOfService() {
       <footer className="legal-footer">
         <div className="container">
           <p>© 2026 Souling. All rights reserved.</p>
+          <HeroTypeCounts />
         </div>
       </footer>
     </div>

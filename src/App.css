@@ -655,3 +655,154 @@ html[lang="ko"] .num {
     font-size: 0.8rem;
   }
 }
+
+/* ─── Hero Type Test banner (홈 → /hero-test 진입) ─── */
+.hero-test-banner {
+  padding: 0 0 4rem;
+}
+
+.hero-test-banner-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  background: rgba(22, 48, 192, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 1.6rem 2rem;
+  color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hero-test-banner-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(0, 20, 120, 0.4);
+}
+
+.hero-test-banner-text h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+}
+
+.hero-test-banner-text p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-test-banner-cta {
+  background: linear-gradient(135deg, #ffd166 0%, #ff9e4f 100%);
+  color: #40260a;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 0.7rem 1.5rem;
+  white-space: nowrap;
+}
+
+
+/* ─── Tests hub (/tests) ──────────────────────────────────── */
+
+.nav .nav-tests-link {
+  padding: 0.4rem 1.25rem;
+}
+
+.logo-home-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tests-page {
+  padding: 8rem 0 5rem;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.tests-heading {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+}
+
+.tests-subheading {
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 2rem;
+}
+
+.tests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.test-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: rgba(22, 48, 192, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 1.6rem 1.8rem;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+a.test-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(0, 20, 120, 0.4);
+}
+
+.test-card-badge {
+  align-self: flex-start;
+  background: linear-gradient(135deg, #ffd166 0%, #ff9e4f 100%);
+  color: #40260a;
+  font-weight: 800;
+  font-size: 0.8rem;
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+}
+
+.test-card-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.test-card-desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.test-card-bottom {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.test-card-meta {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.test-card-cta {
+  background: linear-gradient(135deg, #ffd166 0%, #ff9e4f 100%);
+  color: #40260a;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  white-space: nowrap;
+}
+
+.test-card--soon {
+  opacity: 0.55;
+  border-style: dashed;
+}
