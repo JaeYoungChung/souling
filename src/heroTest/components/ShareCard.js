@@ -20,7 +20,11 @@ const ShareCard = forwardRef(function ShareCard({ type, lang }, ref) {
 
   return (
     <div className="ht-share-card-stage" aria-hidden="true">
-      <div ref={ref} className="ht-share-card">
+      {/* 영어는 문장이 길어 줄 수가 늘어나므로 --en에서 크기를 한 단계 줄인다 */}
+      <div
+        ref={ref}
+        className={`ht-share-card${lang === 'en' ? ' ht-share-card--en' : ''}`}
+      >
         <div className="ht-share-card-inner">
           <p className="ht-share-card-label">
             {lang === 'ko' ? '나의 영웅 유형' : 'My hero type'}

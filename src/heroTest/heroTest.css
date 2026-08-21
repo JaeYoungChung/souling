@@ -363,15 +363,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(8px, 2.5vw, 14px);
+  gap: clamp(6px, 2vw, 14px);
   max-width: 460px;
   margin: 0 auto;
 }
 
 .ht-scale-label {
-  font-size: clamp(1.02rem, 3.2vw, 1.18rem);
+  font-size: clamp(0.88rem, 3vw, 1.18rem);
   font-weight: 800;
   white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 초소형 화면 (영어 Disagree/Agree 라벨 포함 한 줄 유지) */
+@media (max-width: 340px) {
+  .ht-scale-label {
+    font-size: 0.8rem;
+  }
 }
 
 .ht-scale-label--no {
@@ -387,7 +395,7 @@
 .ht-scale-dots {
   display: flex;
   align-items: center;
-  gap: clamp(9px, 2.9vw, 17px);
+  gap: clamp(7px, 2.6vw, 17px);
 }
 
 .ht-scale-dot {
@@ -991,6 +999,33 @@
   margin: 0;
   color: rgba(255, 255, 255, 0.92);
   word-break: keep-all;
+}
+
+/* 영어 카드 — 긴 문장으로 인한 하단 잘림 방지용 축소 */
+.ht-share-card--en .ht-share-card-image {
+  width: 420px;
+  height: 420px;
+}
+
+.ht-share-card--en .ht-share-card-name {
+  font-size: 82px;
+}
+
+.ht-share-card--en .ht-share-card-hook {
+  font-size: 46px;
+}
+
+.ht-share-card--en .ht-share-card-section {
+  margin-top: 28px;
+  padding: 30px 40px;
+}
+
+.ht-share-card--en .ht-share-card-strength {
+  font-size: 31px;
+}
+
+.ht-share-card--en .ht-share-card-caution-text {
+  font-size: 29px;
 }
 
 .ht-share-card-footer {

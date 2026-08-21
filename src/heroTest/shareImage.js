@@ -14,11 +14,15 @@ import { toPng } from 'html-to-image';
 const CARD_WIDTH = 1080;
 const CARD_HEIGHT = 1920;
 
-function isIOS() {
+// iOS뿐 아니라 macOS Safari도 같은 웹킷 렌더링 버그가 있어 함께 감지한다
+function isWebKit() {
+  const ua = navigator.userAgent;
   return (
-    /iP(hone|od|ad)/.test(navigator.userAgent) ||
+    /iP(hone|od|ad)/.test(ua) ||
     // iPadOS 13+ 는 Mac으로 위장하므로 터치 지원 여부로 구분
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+    // 데스크톱 Safari (Chrome/Edge/Opera는 UA에 자기 토큰이 있음)
+    (/Safari\//.test(ua) && !/Chrome|Chromium|Edg\/|OPR\//.test(ua))
   );
 }
 
@@ -43,11 +47,13 @@ async function renderCardToBlob(node) {
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     pixelRatio: 1,
-    cacheBust: true,
+    // cacheBust는 이미지 URL에 쿼리를 붙여 재요청을 유발하는데, Safari에서
+    // 재요청이 캡처보다 늦게 끝나면 이미지가 빈 채로 찍힌다 → 끈다 (동일 출처라 안전)
+    cacheBust: false,
     backgroundColor: '#091970',
   };
 
-  const attempts = isIOS() ? 3 : 1;
+  const attempts = isWebKit() ? 3 : 1;
   let dataUrl = '';
   for (let i = 0; i < attempts; i += 1) {
     // eslint-disable-next-line no-await-in-loop

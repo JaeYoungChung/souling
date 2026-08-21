@@ -4,11 +4,11 @@ import React from 'react';
 // 왼쪽 끝 "아니다"(1점) / 오른쪽 끝 "그렇다"(5점)
 // 좁은 화면에서는 vw 기준으로 줄어들어 한 줄에 항상 들어간다.
 const SIZES = [
-  'clamp(44px, 12.5vw, 56px)',
-  'clamp(35px, 10vw, 45px)',
-  'clamp(26px, 7.5vw, 34px)',
-  'clamp(35px, 10vw, 45px)',
-  'clamp(44px, 12.5vw, 56px)',
+  'clamp(40px, 12vw, 56px)',
+  'clamp(32px, 9.6vw, 45px)',
+  'clamp(24px, 7vw, 34px)',
+  'clamp(32px, 9.6vw, 45px)',
+  'clamp(40px, 12vw, 56px)',
 ];
 
 function ScaleInput({ value, onSelect, noLabel, yesLabel, disabled }) {
