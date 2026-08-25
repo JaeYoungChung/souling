@@ -133,8 +133,8 @@ export const QUESTIONS = [
     id: 15,
     stat: 'impulse',
     text: {
-      ko: '감정이 표정이나 태도에 티가 나는 편이다.',
-      en: 'My emotions show on my face and in my attitude.',
+      ko: '충동적으로 행동할 때가 종종 있다.',
+      en: 'I often act impulsively',
     },
   },
   {

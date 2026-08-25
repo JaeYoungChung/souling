@@ -41,7 +41,7 @@ export function validateAnswers(answers) {
 
 // 1단계 — 답변 환산 후 능력치별 원점수 합산
 // 양 극단 답변(1점·5점)은 강한 신호이므로 가중치를 키운다.
-const ANSWER_WEIGHT = { 1: 0, 2: 2, 3: 3, 4: 4, 5: 7 };
+const ANSWER_WEIGHT = { 1: 0, 2: 2, 3: 3, 4: 4, 5: 6 };
 
 export function computeRawScores(answers) {
   const raw = {};
