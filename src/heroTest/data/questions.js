@@ -76,8 +76,8 @@ export const QUESTIONS = [
     id: 8,
     stat: 'instinct',
     text: {
-      ko: '이유는 설명 못 해도 “이건 아닌데” 싶은 감이 잘 맞는 편이다.',
-      en: 'Even when I can’t explain why, my “something’s off” feeling usually turns out right.',
+      ko: '이유는 설명 못 해도 감이 잘 맞는 편이다.',
+      en: 'Even when I can’t explain why, my gut feeling usually turns out right.',
     },
   },
   {
