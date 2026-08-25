@@ -15,7 +15,7 @@ const ShareCard = forwardRef(function ShareCard({ type, lang }, ref) {
   const caution = txt(type.caution, lang);
   const tagline =
     lang === 'ko'
-      ? 'Souling에서 나의 영웅력을 길러봐요'
+      ? '소울링에서 나의 영웅력을 길러봐요'
       : 'Grow your hero power with Souling';
 
   return (

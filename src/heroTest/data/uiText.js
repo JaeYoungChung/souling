@@ -53,7 +53,7 @@ export const UI_TEXT = {
 
     appStoreAlt: 'App Store에서 다운로드',
     playStoreAlt: 'Google Play에서 다운로드',
-    ctaTagline: 'Souling에서 나의 영웅력을 길러봐요',
+    ctaTagline: '소울링에서 나의 영웅력을 길러봐요',
     langToggle: 'English',
   },
   en: {
