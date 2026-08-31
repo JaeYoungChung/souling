@@ -581,10 +581,27 @@ html[lang="ko"] .num {
   }
 }
 
-/* 아주 좁은 화면에서는 문의하기 링크는 숨긴다 (푸터에도 있음) */
-@media (max-width: 430px) {
+/* 좁은 화면에서는 문의하기 링크는 숨긴다 (푸터에도 있음).
+   탭이 유형 검사 + 블로그 둘이라 430px보다 여유 있게 잡는다. */
+@media (max-width: 560px) {
   .nav .contact-link:not(.nav-tests-link) {
     display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo {
+    font-size: 1rem;
+  }
+
+  .nav .contact-link,
+  .nav .lang-toggle {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.78rem;
+  }
+
+  .nav .nav-tests-link {
+    padding: 0.3rem 0.6rem;
   }
 }
 

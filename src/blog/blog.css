@@ -1,0 +1,360 @@
+/* ─── 블로그 (/blog, /blog/:slug) ─────────────────────────────
+   블로그는 글을 읽는 곳이라 홈의 하늘색 그라데이션 대신 어두운 남색 배경을
+   깔아 대비를 높인다. 본문 폰트도 브랜드 폰트(Baloo 2/Jua) 대신 시스템
+   본문 폰트를 써서 긴 글이 읽히게 한다. */
+
+.blog-page {
+  --blog-ink: rgba(255, 255, 255, 0.92);
+  --blog-ink-dim: rgba(255, 255, 255, 0.66);
+  --blog-body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo',
+    'Noto Sans KR', 'Malgun Gothic', Roboto, Helvetica, Arial, sans-serif;
+
+  padding: 8rem 0 5rem;
+  min-height: 100vh;
+  color: var(--blog-ink);
+  background: linear-gradient(180deg, #060c2b 0%, #091144 55%, #0b1a5a 100%);
+
+  /* 배경의 별·달 레이어(z-index 1~2)보다 위에 올려 글 대비를 유지한다 */
+  position: relative;
+  z-index: 3;
+}
+
+/* 홈과 달리 스크롤해도 상단 바가 남아 있어서, 투명한 채로 두면 본문 위에
+   글자가 겹친다. 어두운 반투명 배경을 깔아 본문과 분리한다. */
+.blog-header {
+  padding: 1.1rem 0;
+  background: rgba(6, 12, 43, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.blog-header .logo-image {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+
+.blog-header .logo {
+  font-size: 1.25rem;
+}
+
+.blog-heading {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+}
+
+.blog-subheading {
+  font-family: var(--blog-body-font);
+  font-size: 1rem;
+  color: var(--blog-ink-dim);
+  margin-bottom: 2.5rem;
+}
+
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 820px;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 1.6rem 1.8rem;
+  color: var(--blog-ink);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+a.blog-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
+}
+
+.blog-card--soon {
+  opacity: 0.55;
+  border-style: dashed;
+  max-width: 820px;
+}
+
+.blog-card-meta {
+  display: flex;
+  gap: 0.4rem;
+  font-family: var(--blog-body-font);
+  font-size: 0.85rem;
+  color: var(--blog-ink-dim);
+}
+
+.blog-card-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+
+.blog-card-desc {
+  font-family: var(--blog-body-font);
+  font-size: 0.95rem;
+  color: var(--blog-ink-dim);
+  line-height: 1.65;
+  word-break: keep-all;
+}
+
+.blog-card-bottom {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.blog-tag {
+  font-family: var(--blog-body-font);
+  font-size: 0.8rem;
+  color: var(--blog-ink-dim);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+}
+
+.blog-card-cta {
+  background: linear-gradient(135deg, #ffd166 0%, #ff9e4f 100%);
+  color: #40260a;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* ─── 글 본문 ─────────────────────────────────────────────── */
+
+.blog-post {
+  max-width: 760px;
+}
+
+.blog-back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-family: var(--blog-body-font);
+  color: var(--blog-ink-dim);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.blog-back-link:hover {
+  color: #fff;
+}
+
+.blog-post-title {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.3;
+  margin: 0.5rem 0 0.8rem;
+  word-break: keep-all;
+}
+
+.blog-post-lead {
+  font-family: var(--blog-body-font);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--blog-ink-dim);
+  word-break: keep-all;
+  margin-bottom: 1rem;
+}
+
+/* 본문은 어두운 배경 위 카드 한 장으로 묶어 읽는 영역을 분명히 한다 */
+.blog-post-body {
+  margin-top: 2.5rem;
+  padding: 2.5rem 2.8rem 2rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--blog-body-font);
+  font-size: 1.08rem;
+  line-height: 1.9;
+  color: var(--blog-ink);
+  word-break: keep-all;
+}
+
+.blog-post-body h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 3rem 0 1rem;
+  color: #fff;
+}
+
+.blog-post-body h2:first-child {
+  margin-top: 0;
+}
+
+.blog-post-body h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 2.2rem 0 0.8rem;
+  color: #fff;
+}
+
+.blog-post-body p {
+  margin-bottom: 1.5rem;
+}
+
+.blog-post-body strong {
+  font-weight: 700;
+  color: #ffe1a0;
+}
+
+/* Jua(한국어)는 한 굵기뿐이라 전역에서 400으로 눌러두는데,
+   블로그 본문은 시스템 폰트라 굵기를 되살린다 */
+html[lang='ko'] .blog-post-body h2,
+html[lang='ko'] .blog-post-body h3,
+html[lang='ko'] .blog-post-body strong {
+  font-weight: 700;
+}
+
+.blog-post-body a {
+  color: #ffd166;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.blog-post-body ul,
+.blog-post-body ol {
+  margin: 0 0 1.6rem 1.2rem;
+  padding-left: 0.8rem;
+}
+
+.blog-post-body li {
+  margin-bottom: 0.6rem;
+}
+
+.blog-post-body ul li {
+  list-style: disc;
+}
+
+.blog-post-body ol li {
+  list-style: decimal;
+}
+
+.blog-post-body blockquote {
+  margin: 2rem 0;
+  padding: 1.2rem 1.5rem;
+  border-left: 4px solid #ffd166;
+  border-radius: 0 14px 14px 0;
+  background: rgba(0, 0, 0, 0.22);
+  font-size: 1.12rem;
+  color: #fff;
+}
+
+.blog-post-body figure {
+  margin: 2rem 0;
+}
+
+.blog-post-body figure img {
+  width: 100%;
+  border-radius: 16px;
+  display: block;
+}
+
+.blog-post-body figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+/* ─── 글 끝 CTA · 다른 글 ─────────────────────────────────── */
+
+.blog-post-cta {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  background: rgba(22, 48, 192, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  padding: 1.6rem 1.8rem;
+}
+
+.blog-post-cta h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+}
+
+.blog-post-cta p {
+  font-family: var(--blog-body-font);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  word-break: keep-all;
+}
+
+.blog-post-more {
+  margin-top: 3rem;
+}
+
+.blog-post-more h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+}
+
+.blog-post-more li {
+  margin-bottom: 0.5rem;
+}
+
+.blog-post-more a {
+  font-family: var(--blog-body-font);
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.blog-post-more a:hover {
+  color: #fff;
+  border-color: #fff;
+}
+
+@media (max-width: 768px) {
+  .blog-page {
+    padding: 6rem 0 3rem;
+  }
+
+  .blog-heading {
+    font-size: 1.8rem;
+  }
+
+  .blog-card {
+    padding: 1.3rem 1.4rem;
+  }
+
+  .blog-post-body {
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-top: 2rem;
+    padding: 1.6rem 1.3rem 1.2rem;
+    border-radius: 18px;
+  }
+
+  .blog-post-cta {
+    padding: 1.3rem 1.4rem;
+  }
+}

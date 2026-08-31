@@ -13,6 +13,7 @@ const TEXT = {
     subheading: 'Get to know yourself, one test at a time.',
     comingSoonTitle: 'A new test is brewing',
     comingSoonDesc: 'We are crafting the next one. Stay tuned!',
+    navBlog: 'Blog',
     langToggle: '한국어',
   },
   ko: {
@@ -21,6 +22,7 @@ const TEXT = {
     subheading: '테스트로 하나씩 알아가는 나.',
     comingSoonTitle: '새로운 유형 검사 준비 중',
     comingSoonDesc: '다음 검사를 만들고 있어요. 기대해 주세요!',
+    navBlog: '블로그',
     langToggle: 'English',
   },
 };
@@ -83,6 +85,7 @@ function TestsPage() {
             </Link>
           </div>
           <nav className="nav">
+            <Link to="/blog" className="contact-link nav-tests-link">{t.navBlog}</Link>
             <button type="button" className="lang-toggle" onClick={toggleLang}>
               {t.langToggle}
             </button>

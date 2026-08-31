@@ -40,6 +40,10 @@ import statsKr from './assets/stats_kr.png';
 // 영웅 유형 테스트 — 홈 번들과 분리 로딩
 const HeroTestApp = lazy(() => import('./heroTest/HeroTestApp'));
 
+// 블로그 — 글이 늘어나도 홈 번들이 커지지 않게 분리 로딩
+const BlogPage = lazy(() => import('./blog/BlogPage'));
+const BlogPost = lazy(() => import('./blog/BlogPost'));
+
 
 const CONTACT_EMAIL = 'growyoursouling@gmail.com';
 
@@ -89,6 +93,7 @@ const TRANSLATIONS = {
     statsTitle: '24 Strengths',
     statsDesc: 'Souling keeps track of your progress. Choose your skills, level up, and climb the global leaderboard!',
     navTests: 'Tests',
+    navBlog: 'Blog',
     heroTestTitle: 'Which hero lives inside you?',
     heroTestDesc: '27 questions · about 5 min · 16 hero types',
     heroTestCta: 'Take the test',
@@ -117,6 +122,7 @@ const TRANSLATIONS = {
     statsTitle: '24가지 능력치',
     statsDesc: '소울링은 진행 상태를 기록해요. 능력치를 선택하고 레벨업하며 글로벌 리더보드에 도전하세요!',
     navTests: '유형 검사',
+    navBlog: '블로그',
     heroTestTitle: '내 안의 영웅은 누구일까요?',
     heroTestDesc: '27문항 · 약 5분 · 16가지 영웅 유형',
     heroTestCta: '테스트 하러 가기',
@@ -249,6 +255,7 @@ function HomePage() {
           </div>
           <nav className="nav">
             <Link to="/tests" className="contact-link nav-tests-link">{t.navTests}</Link>
+            <Link to="/blog" className="contact-link nav-tests-link">{t.navBlog}</Link>
             <button type="button" className="lang-toggle" onClick={toggleLang}>
               {t.langToggle}
             </button>
@@ -395,6 +402,22 @@ function App() {
           <Route path="/termsofservice" element={<TermsOfService />} />
           <Route path="/eula" element={<EULA />} />
           <Route path="/tests" element={<TestsPage />} />
+          <Route
+            path="/blog"
+            element={
+              <Suspense fallback={null}>
+                <BlogPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog/:slug"
+            element={
+              <Suspense fallback={null}>
+                <BlogPost />
+              </Suspense>
+            }
+          />
           <Route
             path="/hero-test/*"
             element={
