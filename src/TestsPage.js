@@ -76,12 +76,13 @@ function TestsPage() {
 
   return (
     <>
-      <header className="header">
+      <header className="header tests-header">
         <div className="container">
           <div className="logo-section">
             <Link to="/" className="logo-home-link" aria-label="Souling home">
               <img src={appLogo} alt="Souling" className="logo-image" />
-              <h1 className="logo">Souling</h1>
+              {/* h1은 페이지당 하나(페이지 제목)만 두도록 로고는 span으로 */}
+              <span className="logo">Souling</span>
             </Link>
           </div>
           <nav className="nav">

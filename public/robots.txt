@@ -1,5 +1,6 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /hero-test/verify
+Disallow: /hero-test/quiz
 
 Sitemap: https://souling.netlify.app/sitemap.xml

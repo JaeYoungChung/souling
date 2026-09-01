@@ -251,7 +251,8 @@ function HomePage() {
         <div className="container">
           <div className="logo-section">
             <img src={appLogo} alt="Souling" className="logo-image" />
-            <h1 className="logo">{t.heroTitle}</h1>
+            {/* h1은 히어로 제목 하나만 — 로고는 span */}
+            <span className="logo">{t.heroTitle}</span>
           </div>
           <nav className="nav">
             <Link to="/tests" className="contact-link nav-tests-link">{t.navTests}</Link>
@@ -320,21 +321,21 @@ function HomePage() {
           <div className="features-grid">
             <div className="feature-card feature-card--routines">
               <div className="feature-icon">
-                <img src={img.routines} alt={t.routinesTitle} className="feature-icon-img" />
+                <img src={img.routines} alt={t.routinesTitle} className="feature-icon-img" loading="lazy" decoding="async" />
               </div>
               <h3 className="feature-title">{nums(t.routinesTitle)}</h3>
               <p className="feature-description">{nums(t.routinesDesc)}</p>
             </div>
             <div className="feature-card feature-card--soultypes">
               <div className="feature-icon">
-                <img src={img.soultypes} alt={t.soultypesTitle} className="feature-icon-img" />
+                <img src={img.soultypes} alt={t.soultypesTitle} className="feature-icon-img" loading="lazy" decoding="async" />
               </div>
               <h3 className="feature-title">{nums(t.soultypesTitle)}</h3>
               <p className="feature-description">{nums(t.soultypesDesc)}</p>
             </div>
             <div className="feature-card feature-card--stats">
               <div className="feature-icon">
-                <img src={img.stats} alt={t.statsTitle} className="feature-icon-img" />
+                <img src={img.stats} alt={t.statsTitle} className="feature-icon-img" loading="lazy" decoding="async" />
               </div>
               <h3 className="feature-title">{nums(t.statsTitle)}</h3>
               <p className="feature-description">{nums(t.statsDesc)}</p>
@@ -374,6 +375,8 @@ function HomePage() {
             </div>
           </div>
           <div className="footer-links">
+            <Link to="/tests">{t.navTests}</Link>
+            <Link to="/blog">{t.navBlog}</Link>
             <Link to="/privacy-policy">{t.privacyPolicy}</Link>
             <Link to="/terms-of-service">{t.termsOfService}</Link>
             <Link to="/eula">{t.eula}</Link>

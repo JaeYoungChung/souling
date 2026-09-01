@@ -30,7 +30,8 @@ const SITE_URL = 'https://souling.netlify.app';
 // 유형 검사 OG 텍스트는 공유가 대부분 한국어권에서 일어나 한국어 기준으로 생성
 const DEFAULT_DESCRIPTION = '27문항으로 알아보는 나의 영웅 유형 — 소울링';
 const TEST_TITLE = '영웅 유형 테스트 — 소울링';
-const DEFAULT_IMAGE = `${SITE_URL}/favicon.ico`;
+// 공유 카드 기본 이미지 (public/og-cover.png, 1200×630)
+const DEFAULT_IMAGE = `${SITE_URL}/og-cover.png`;
 
 // 블로그는 영어가 기준 언어 (검색 노출 우선순위)
 const BLOG_TITLE = 'Souling Blog — Habits, Routines, and Small Daily Wins';
@@ -78,6 +79,13 @@ function setCanonical(html, url) {
   return html.replace('</head>', `${tag}</head>`);
 }
 
+function appendMetaTags(html, tags) {
+  const markup = tags
+    .map(({ property, content }) => `<meta property="${property}" content="${escapeHtml(content)}"/>`)
+    .join('');
+  return html.replace('</head>', `${markup}</head>`);
+}
+
 function appendJsonLd(html, data) {
   const tag = `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
   return html.replace('</head>', `${tag}</head>`);
@@ -97,7 +105,7 @@ function kstToday() {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
 }
 
-function buildPage(template, { title, description, image, url, ogType }) {
+function buildPage(template, { title, description, image, imageAlt, url, ogType, twitterCard }) {
   let html = template;
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title)}</title>`);
   html = replaceNamedMeta(html, 'description', description);
@@ -105,13 +113,24 @@ function buildPage(template, { title, description, image, url, ogType }) {
   html = replaceMeta(html, 'og:description', description);
   html = replaceMeta(html, 'og:url', url);
   html = replaceMeta(html, 'og:image', image);
+  html = replaceMeta(html, 'og:image:alt', imageAlt || title);
   if (ogType) html = replaceMeta(html, 'og:type', ogType);
   html = setCanonical(html, url);
+
+  // 템플릿의 1200×630은 기본 커버 기준 — 다른 이미지를 쓰는 페이지에서는
+  // 크기를 알 수 없으니 틀린 값을 남기지 말고 지운다.
+  if (image !== DEFAULT_IMAGE) {
+    html = html.replace(/<meta property="og:image:(width|height)" content="[^"]*"\s*\/>/g, '');
+  }
+
+  // 템플릿에 있는 twitter:image 는 아래에서 페이지별로 다시 넣는다
+  html = html.replace(/<meta name="twitter:image" content="[^"]*"\s*\/>/, '');
   html = html.replace(
     /<meta name="twitter:card" content="[^"]*"\s*\/>/,
     [
-      // 유형 이미지가 정사각형(1:1)이라 X에서는 summary 카드가 맞음
-      `<meta name="twitter:card" content="summary" />`,
+      // 기본은 1200×630 커버라 큰 카드. 정사각형 유형 이미지를 쓰는
+      // 결과 페이지만 summary 로 내려잡는다.
+      `<meta name="twitter:card" content="${twitterCard || 'summary_large_image'}" />`,
       `<meta name="twitter:title" content="${escapeHtml(title)}" />`,
       `<meta name="twitter:description" content="${escapeHtml(description)}" />`,
       `<meta name="twitter:image" content="${escapeHtml(image)}" />`,
@@ -159,13 +178,57 @@ function generateHeroPages(template) {
 
     writePage(
       `/hero-test/result/${type.id}`,
-      buildPage(template, { title, description, image, url })
+      buildPage(template, { title, description, image, imageAlt: title, url, twitterCard: 'summary' })
     );
     console.log(`  ✓ /hero-test/result/${type.id} — "${title}"`);
   });
 
   console.log(`OG pages generated for ${heroTypes.length} hero types.`);
   return heroTypes;
+}
+
+// ─── 유형 검사 허브 (/tests) ─────────────────────────────────
+// 카드 내용은 src/TestsPage.js 안에 있어(=import가 있어) 여기서 읽지 않는다.
+// 크롤러에게 필요한 건 페이지 정체성과 내부 링크라서 제목·소개·링크만 넣는다.
+
+function generateTestsPage(template) {
+  const url = `${SITE_URL}/tests`;
+  let html = buildPage(template, {
+    title: 'Personality Tests — Souling',
+    description:
+      'Free personality tests from Souling. Find out which of 16 hero types lives inside you in 27 questions.',
+    image: DEFAULT_IMAGE,
+    url,
+  });
+  html = appendJsonLd(html, {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Personality Tests',
+    url,
+    inLanguage: 'en',
+    isPartOf: { '@type': 'WebSite', name: 'Souling', url: `${SITE_URL}/` },
+  });
+  html = setRootContent(
+    html,
+    [
+      '<div class="App">',
+      STATIC_HEADER,
+      '<main class="tests-page"><div class="container">',
+      '<h1 class="tests-heading">Personality Tests</h1>',
+      '<p class="tests-subheading">Get to know yourself, one test at a time.</p>',
+      '<div class="tests-grid"><a class="test-card" href="/hero-test">',
+      '<h2 class="test-card-title">Hero Type Test</h2>',
+      '<p class="test-card-desc">Which hero lives inside you? From Odysseus to Achilles — find yours among 16 hero types.</p>',
+      '<div class="test-card-bottom"><span class="test-card-meta">27 questions · about 5 min</span>',
+      '<span class="test-card-cta">Take the test →</span></div>',
+      '</a></div>',
+      '</div></main>',
+      '</div>',
+    ].join('')
+  );
+  html = setHtmlLang(html, 'en');
+  writePage('/tests', html);
+  console.log('  ✓ /tests — "Personality Tests"');
 }
 
 // ─── 블로그 ──────────────────────────────────────────────────
@@ -220,7 +283,7 @@ function formatDate(dateStr, lang) {
 // (내부 링크를 크롤러에게 알려주는 역할도 한다)
 const STATIC_HEADER = [
   '<header class="header"><div class="container">',
-  '<div class="logo-section"><a class="logo-home-link" href="/"><h1 class="logo">Souling</h1></a></div>',
+  '<div class="logo-section"><a class="logo-home-link" href="/"><span class="logo">Souling</span></a></div>',
   '<nav class="nav">',
   '<a class="contact-link nav-tests-link" href="/tests">Tests</a>',
   '<a class="contact-link nav-tests-link" href="/blog">Blog</a>',
@@ -323,6 +386,7 @@ function generateBlogPages(template) {
       title: `${content.title} | Souling Blog`,
       description: content.description,
       image,
+      imageAlt: content.title,
       url,
       ogType: 'article',
     });
@@ -331,6 +395,11 @@ function generateBlogPages(template) {
       'keywords',
       (content.tags || []).join(', ') || 'habits, routines, self-improvement'
     );
+    html = appendMetaTags(html, [
+      { property: 'article:published_time', content: post.date },
+      { property: 'article:modified_time', content: post.updated || post.date },
+      ...(content.tags || []).map((tag) => ({ property: 'article:tag', content: tag })),
+    ]);
     html = appendJsonLd(html, {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
@@ -347,7 +416,7 @@ function generateBlogPages(template) {
         url: `${SITE_URL}/`,
         logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.ico` },
       },
-      ...(post.cover ? { image } : {}),
+      image,
     });
     html = setRootContent(html, postBodyHtml(post, content, lang));
     html = setHtmlLang(html, lang);
@@ -382,6 +451,12 @@ function generateSitemap({ heroTypes, posts }) {
       priority: '0.5',
       changefreq: 'yearly',
     })),
+    ...['/privacy-policy', '/terms-of-service', '/eula'].map((route) => ({
+      loc: `${SITE_URL}${route}`,
+      lastmod: today,
+      priority: '0.2',
+      changefreq: 'yearly',
+    })),
   ];
 
   const xml = [
@@ -414,6 +489,7 @@ function main() {
   const template = fs.readFileSync(templatePath, 'utf8');
 
   const heroTypes = generateHeroPages(template);
+  generateTestsPage(template);
   const posts = generateBlogPages(template);
   generateSitemap({ heroTypes, posts });
 }

@@ -6,6 +6,10 @@ function EULA() {
   const [clicks, setClicks] = useState(null);
 
   useEffect(() => {
+    document.title = 'EULA | Souling';
+  }, []);
+
+  useEffect(() => {
     fetch('/.netlify/functions/count')
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => d && setClicks(d))
